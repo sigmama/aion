@@ -1,0 +1,101 @@
+<form [formGroup]="f" (ngSubmit)="onSubmit()" #fm="ngForm">
+  <nb-card>
+    <nb-card-header>
+      <div class="modal-header-title">
+        <div cdkFocusInitial class="title" tabindex="-1">Create a Job Instance</div>
+        <button nbButton size="small" ghost (click)="cancel()">
+          <nb-icon icon="close-outline"></nb-icon>
+        </button>
+      </div>
+      <nb-alert *ngIf="errScheduleCronInstance$ | async" status="danger" role="alert">
+        <p class="alert-title"><b>Error returned from server!</b></p>
+        <div>{{ errScheduleCronInstance$ | async }}</div>
+      </nb-alert>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-sm-6 col-md-3">
+          <div class="form-group">
+            <label for="ddlSystem" class="label">System</label>
+            <nb-select class="required" id="ddlSystem" formControlName="system" placeholder="- select system -"
+              [status]="f.get('system').touched && f.get('system').errors ? 'danger': 'basic'" fullWidth size="tiny">
+              <nb-option *ngFor="let sys of systems" [value]="sys">{{
+                sys
+                }}</nb-option>
+            </nb-select>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+          <div class="form-group">
+            <label for="ddlCategory" class="label">Category</label>
+            <nb-select class="required" id="ddlCategory" formControlName="category" placeholder="- select category -"
+              [status]="f.get('category').touched && f.get('category').errors ? 'danger': 'basic'" fullWidth
+              size="tiny">
+              <nb-option *ngFor="let cat of categories$ | async" [value]="cat">{{
+                cat
+                }}</nb-option>
+            </nb-select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="ddlJobName" class="label">Job Name</label>
+            <nb-select class="required" id="ddlJobName" formControlName="name" placeholder="- select job -"
+              [status]="f.get('name').touched && f.get('name').errors ? 'danger': 'basic'" fullWidth size="tiny">
+              <nb-option *ngFor="let name of jobNames$ | async" [value]="name">{{
+                name
+                }}</nb-option>
+            </nb-select>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+          <div class="form-group">
+            <label for="txtCron" class="label">Cron Expression</label>
+            <div class="cron-picker">
+              <input class="required" readonly nbInput fullWidth fieldSize="tiny" id="txtCron" formControlName="cron"
+                [value]="cron$ | async" [status]="f.get('cron').touched && f.get('cron').errors? 'danger': 'basic'" />
+              <button type="button" size='tiny' status="info" nbButton (click)="showCronPicker()">
+                <i class="eva eva-clock-outline"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+          <div class="form-group">
+            <label for="ddlTimeZone" class="label">Timezone</label>
+            <nb-select class="required" id="ddlTimeZone" formControlName="timezone" placeholder="- select timezone -"
+              [status]="f.get('timezone').touched && f.get('timezone').errors ? 'danger': 'basic'" fullWidth
+              size="tiny">
+              <nb-option *ngFor="let timezone of timezones" [value]="timezone">{{
+                timezone
+                }}</nb-option>
+            </nb-select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="txtSelectedJobDesc" class="label">Job Description</label>
+            <input readonly nbInput fullWidth fieldSize="tiny" id="txtSelectedJobDesc" [value]="jobDesc$ | async" />
+            <!-- <input readonly nbInput fullWidth fieldSize="tiny" id="txtSelectedJobDesc" [value]="selectedJobDesc" /> -->
+          </div>
+        </div>
+      </div>
+    </nb-card-body>
+
+    <nb-card-footer>
+      <button class="cancel" type="button" nbButton size="small" status="danger" (click)="cancel()">
+        <i class="eva eva-close-square-outline"></i>
+        close
+      </button>
+      <button type="submit" nbButton size="small" status="success" [disabled]="!f.valid">
+        <i class="eva eva-save-outline"></i>
+        save
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</form>

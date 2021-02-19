@@ -1,0 +1,34 @@
+<ng-container [formGroup]="parent.control">
+  <ng-container *ngIf="!hideHours">
+    <nb-select size="tiny" formControlName="hours">
+      <nb-option *ngFor="let hour of hours" [value]="hour">{{hour}}</nb-option>
+    </nb-select>
+  </ng-container>
+  <label *ngIf="!hideHoursOnMinute" class="label">&nbsp;hour(s) on minute&nbsp;</label>
+  <ng-container *ngIf="!hideMinutes">
+    <ng-container>
+      <nb-select size="tiny" formControlName="minutes">
+        <nb-option *ngFor="let minute of minutes" [value]="minute">{{minute}}</nb-option>
+      </nb-select>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="!hideSeconds">
+    <span *ngIf="!hideMinutes">:</span>
+    <ng-container>
+      <label class="label">Second(s)</label>
+      <nb-select size="tiny" formControlName="seconds">
+        <nb-option *ngFor="let second of seconds" [value]="second">{{second}}</nb-option>
+      </nb-select>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="!use24HourTime">
+    <span></span>.
+    <ng-container>
+      <nb-select size="tiny" formControlName="hourType">
+        <nb-option *ngFor="let hourType of hourTypes" [value]="hourType">{{hourType}}</nb-option>
+      </nb-select>
+    </ng-container>
+  </ng-container>
+</ng-container>

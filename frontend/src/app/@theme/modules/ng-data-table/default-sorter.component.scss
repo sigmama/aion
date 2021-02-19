@@ -1,0 +1,9 @@
+@import '../../styles/themes';
+
+@include nb-install-component() {
+  .tb-sort {
+    cursor: pointer;
+    text-decoration: underline;
+    color: nb-theme(color-primary-default);
+  }
+}

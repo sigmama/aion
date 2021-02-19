@@ -1,0 +1,17 @@
+<form (ngSubmit)="onSubmit()">
+  <nb-card>
+    <nb-card-body>
+      <cron-editor (validateCron)="validateCron($event)" [formControl]="cronForm" [options]="cronOptions"></cron-editor>
+    </nb-card-body>
+    <nb-card-footer>
+      <button class="cancel" type="button" nbButton size="small" status="danger" (click)="cancel()">
+        <i class="eva eva-close-square-outline"></i>
+        close
+      </button>
+      <button type="submit" nbButton size="small" [disabled]="!isValid" status="success">
+        <i class="eva eva-save-outline"></i>
+        confirm
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</form>

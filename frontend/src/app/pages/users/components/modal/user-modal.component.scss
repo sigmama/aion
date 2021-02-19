@@ -1,0 +1,30 @@
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  nb-alert {
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+
+  nb-card-header {
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+  }
+
+  button[nbButton]:not(:last-child) {
+    margin-right: 1rem;
+  }
+
+  .modal-header-title {
+    display: flex;
+    justify-content: space-between;
+
+    div {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+  }
+  .required {
+    border-left: solid 3px nb-theme(color-danger-default);
+  }
+}

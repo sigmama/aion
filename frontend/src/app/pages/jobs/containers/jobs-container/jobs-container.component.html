@@ -1,0 +1,7 @@
+<nb-card>
+  <nb-card-header>Jobs</nb-card-header>
+  <nb-card-body>
+    <ngx-jobs [jobs]="jobs$ | async" [loggedAccount]="loggedAccount$ | async"
+      (scheduleImmediateJobInstance)="scheduleImmediateJobInstance($event)"></ngx-jobs>
+  </nb-card-body>
+</nb-card>

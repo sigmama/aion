@@ -1,0 +1,77 @@
+<table [mfData]="users | dataFilter:{userEid:userFilter,nickName:userFilter}" #mf="mfDataTable"
+  class="table table-bordered" [mfRowsOnPage]="rowsOnPage">
+  <thead>
+    <tr>
+      <th>
+        User EID/HID
+      </th>
+      <th>
+        Nick Name
+      </th>
+      <th>
+        Mail
+      </th>
+      <th>
+        Role
+      </th>
+      <th>
+        Systems
+      </th>
+      <th>
+        Is Active
+      </th>
+      <th>
+        Actions
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="6">
+        <input nbInput fullWidth fieldSize="tiny" type="text" [(ngModel)]="userFilter"
+          placeholder="Filter By EID/HID or Nick Name" />
+      </td>
+      <td>
+        <button type="button" nbButton size="tiny" (click)="showUserModal('add', '')" status="primary" title="add">
+          <i class="eva eva-file-add-outline"></i>&nbsp;add
+        </button>
+      </td>
+    </tr>
+    <tr *ngFor="let u of mf.data">
+      <td>
+        {{ u.userEid }}
+      </td>
+      <td>
+        {{ u.nickName }}
+      </td>
+      <td>
+        {{ u.mail }}
+      </td>
+      <td>
+        {{ u.role }}
+      </td>
+      <td>
+        {{ u.systems.join(',') }}
+      </td>
+      <td>
+        <nb-checkbox onclick="return false;" [checked]="u.isActive" readonly></nb-checkbox>
+      </td>
+      <td style="width: 180px; padding-right: 0;">
+        <button type="button" nbButton status="warning" size="tiny" (click)="showUserModal('edit', u.userEid)"
+          title="edit">
+          <i class="eva eva-edit-outline"></i>&nbsp;edit
+        </button>
+        <button type="button" nbButton status="danger" size="tiny" (click)="deleteUser(u.userEid)" title="delete">
+          <i class="eva eva-trash-2-outline"></i>&nbsp;delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="7">
+        <mfBootstrapPaginator class="paging" [rowsOnPageSet]="[5, 10, 15]"></mfBootstrapPaginator>
+      </td>
+    </tr>
+  </tfoot>
+</table>

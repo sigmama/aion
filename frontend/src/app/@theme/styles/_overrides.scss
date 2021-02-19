@@ -1,0 +1,64 @@
+@import './themes';
+
+@mixin nb-overrides() {
+  /*change color in autofill textbox*/
+  input:-webkit-autofill {
+    box-shadow: 0 0 0 30px nb-theme(input-primary-background-color) inset !important;
+    -webkit-box-shadow: 0 0 0 30px nb-theme(input-primary-background-color)
+      inset !important;
+    -webkit-text-fill-color: nb-theme(input-primary-text-color) !important;
+    caret-color: nb-theme(input-primary-text-color) !important;
+  }
+  input:-webkit-autofill:hover {
+    box-shadow: 0 0 0 30px nb-theme(input-primary-hover-background-color) inset !important;
+    -webkit-box-shadow: 0 0 0 30px
+      nb-theme(input-primary-hover-background-color) inset !important;
+    -webkit-text-fill-color: nb-theme(input-primary-text-color) !important;
+  }
+  input:-webkit-autofill:focus {
+    box-shadow: 0 0 0 30px nb-theme(input-primary-focus-background-color) inset !important;
+    -webkit-box-shadow: 0 0 0 30px
+      nb-theme(input-primary-focus-background-color) inset !important;
+    -webkit-text-fill-color: nb-theme(input-primary-text-color) !important;
+  }
+
+  @include nb-for-themes(light-mixed, dark-mixed) {
+    nb-layout-header {
+      nb-actions,
+      .logo-container {
+        nb-icon,
+        .user-picture,
+        .user-name {
+          color: nb-theme(color-basic-100) !important;
+        }
+      }
+
+      .select-button {
+        background-color: nb-theme(background-basic-color-3) !important;
+      }
+    }
+
+    nb-sidebar {
+      transition: width 0.3s;
+
+      .main-container {
+        transition: width 0.3s;
+      }
+    }
+
+    nb-card {
+      nb-card-header,
+      .tabset {
+        background-color: nb-theme(card-divider-color);
+      }
+    }
+  }
+
+  nb-select.size-medium button {
+    padding: 0.4375rem 2.2rem 0.4375rem 1.125rem !important;
+
+    nb-icon {
+      right: 0.41rem !important;
+    }
+  }
+}

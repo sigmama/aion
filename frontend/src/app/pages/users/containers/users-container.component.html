@@ -1,0 +1,9 @@
+<nb-card>
+  <nb-card-header>Users</nb-card-header>
+  <nb-card-body>
+    <ngx-users [loggedAccount]="loggedAccount$ | async" [users]="users$ | async" [allRoles]="allRoles$ | async"
+      [allSystems]="allSystems$ | async" (handleUserModalOpen)="openUserModal($event)"
+      (handleUserDeletion)="deleteUser($event)">
+    </ngx-users>
+  </nb-card-body>
+</nb-card>

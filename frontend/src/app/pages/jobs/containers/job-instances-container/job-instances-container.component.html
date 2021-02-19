@@ -1,0 +1,9 @@
+<nb-card>
+  <nb-card-header>Job Instances</nb-card-header>
+  <nb-card-body>
+    <ngx-job-instances [jobs]="jobs$ | async" [instances]="instances$ | async"
+      (cancelCronInstance)='cancelCronInstance($event)' [loggedAccount]="loggedAccount$ | async"
+      (openInstanceModal)='openInstanceModal($event)'>
+    </ngx-job-instances>
+  </nb-card-body>
+</nb-card>

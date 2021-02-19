@@ -1,0 +1,53 @@
+<table [mfData]="instances | dataFilter : {system: instanceFilter, job:instanceFilter}" #mf="mfDataTable"
+  class="table table-bordered" [mfRowsOnPage]="rowsOnPage">
+  <thead>
+    <tr>
+      <th> System </th>
+      <th> Job Type </th>
+      <th> Job Name </th>
+      <th> Cron Expression </th>
+      <th> Timezone </th>
+      <th> Last Run At </th>
+      <th> Last Finished At </th>
+      <th> Next Run At </th>
+      <th> Actions </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="8">
+        <input nbInput fullWidth fieldSize="tiny" type="text" [(ngModel)]="instanceFilter"
+          placeholder="Filter By System/Category/Name" />
+      </td>
+      <td style="width: 100px; padding-right: 0;">
+        <button type="button" nbButton size="tiny" status="primary" [disabled]="!loggedAccount"
+          (click)="showInstanceModal()" title="add">
+          <i class="eva eva-file-add-outline"></i>&nbsp;add
+        </button>
+      </td>
+    </tr>
+    <tr *ngFor="let i of mf.data">
+      <td> {{ i.system }} </td>
+      <td> {{ i.category }} </td>
+      <td> {{ i.name }} </td>
+      <td> {{ i.cron }} </td>
+      <td> {{ i.timeZone }} </td>
+      <td> {{ i.lastRunAt | date : "yyyy-MM-dd HH:mm:ss" }} </td>
+      <td> {{ i.lastFinishedAt | date : "yyyy-MM-dd HH:mm:ss" }} </td>
+      <td> {{ i.nextRunAt | date : "yyyy-MM-dd HH:mm:ss" }} </td>
+      <td style="width: 100px; padding-right: 0;">
+        <button type="button" [disabled]="disableButton(i.system)" nbButton status="danger" size="tiny"
+          (click)="cancelInstance(i.id)" title="cancel">
+          <i class="eva eva-edit-outline"></i>&nbsp;cancel
+        </button>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="9">
+        <mfBootstrapPaginator class="paging" [rowsOnPageSet]="[5, 10, 15]"></mfBootstrapPaginator>
+      </td>
+    </tr>
+  </tfoot>
+</table>

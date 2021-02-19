@@ -1,0 +1,34 @@
+<table [mfData]="jobs | dataFilter : {system: jobFilter}" #mf="mfDataTable" class="table table-bordered">
+  <thead>
+    <tr>
+      <th> System </th>
+      <th> Job Category </th>
+      <th> Job Name </th>
+      <th> Job Description </th>
+      <th> Actions </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="6">
+        <input nbInput fullWidth fieldSize="tiny" type="text" [(ngModel)]="jobFilter" placeholder="Filter By System" />
+      </td>
+    </tr>
+    <tr *ngFor="let j of mf.data">
+      <td *ngIf="j.isFirstSystem" [attr.rowspan]="getSystemCount(j)">
+        {{ j.system }}
+      </td>
+      <td *ngIf="j.isFirstJobCategory" [attr.rowspan]="getJobCategoryCount(j)">
+        {{ j.category }}
+      </td>
+      <td> {{ j.name }} </td>
+      <td> {{ j.desc }} </td>
+      <td style="width: 120px; padding-right: 0;">
+        <button type="button" [disabled]="disableButton(j.system)" nbButton status="warning" size="tiny"
+          (click)="runJobNow(j)" title="run now">
+          <i class="eva eva-edit-outline"></i>&nbsp;run now
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

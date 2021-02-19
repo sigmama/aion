@@ -1,0 +1,227 @@
+<nb-tabset fullWidth (changeTab)="setActiveTab($event)">
+  <nb-tab tabTitle="Minutes">
+    <label class="label">every&nbsp;</label>
+    <cron-time-picker [formGroup]="minutesForm" [use24HourTime]="options.use24HourTime" [hideHours]="true"
+      [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
+    </cron-time-picker>
+    <label class="label">&nbsp;minute(s)</label>
+  </nb-tab>
+
+  <nb-tab tabTitle="Hourly">
+    <label class="label">every&nbsp;</label>
+    <cron-time-picker [formGroup]="hourlyForm" [use24HourTime]="options.use24HourTime" [hideHoursOnMinute]="false"
+      [hideSeconds]="options.hideSeconds ||  !isCronFlavorQuartz">
+    </cron-time-picker>
+  </nb-tab>
+
+  <nb-tab tabTitle="Daily">
+    <ng-container [formGroup]="dailyForm">
+      <nb-radio-group formControlName="subTab" name="daily">
+        <nb-radio value="everyDays">
+          <ng-container formGroupName="everyDays">
+            <label class="label">every&nbsp;</label>
+            <nb-select size="tiny" formControlName="days">
+              <nb-option *ngFor="let monthDay of selectOptions.monthDays" [value]="monthDay">
+                {{monthDay}}
+              </nb-option>
+            </nb-select>
+            <label class="label">&nbsp;day(s) at&nbsp;</label>
+          </ng-container>
+
+          <cron-time-picker formGroupName="everyDays" [use24HourTime]="options.use24HourTime"
+            [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
+          </cron-time-picker>
+        </nb-radio>
+
+        <nb-radio value="everyWeekDay">
+          <label class="label">every working day (MON-FRI) at&nbsp;</label>
+          <cron-time-picker formGroupName="everyWeekDay" [use24HourTime]="options.use24HourTime"
+            [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
+          </cron-time-picker>
+        </nb-radio>
+      </nb-radio-group>
+    </ng-container>
+  </nb-tab>
+
+  <nb-tab tabTitle="Weekly">
+    <div [formGroup]="weeklyForm">
+      <nb-checkbox formControlName="MON"><label class="label">Monday</label></nb-checkbox>
+      <nb-checkbox formControlName="TUE"><label class="label">Tuesday</label></nb-checkbox>
+      <nb-checkbox formControlName="WED"><label class="label">Wednesday</label></nb-checkbox>
+      <nb-checkbox formControlName="THU"><label class="label">Thursday</label></nb-checkbox>
+      <nb-checkbox formControlName="FRI"><label class="label">Friday</label></nb-checkbox>
+      <nb-checkbox formControlName="SAT"><label class="label">Saturday</label></nb-checkbox>
+      <nb-checkbox formControlName="SUN"><label class="label">Sunday</label></nb-checkbox>
+    </div>
+    <div>
+      <label class="label">at&nbsp;</label>
+      <cron-time-picker [formGroup]="weeklyForm" [use24HourTime]="options.use24HourTime"
+        [hideSeconds]="options.hideSeconds|| !isCronFlavorQuartz">
+      </cron-time-picker>
+    </div>
+  </nb-tab>
+
+  <nb-tab tabTitle="Monthly">
+    <ng-container [formGroup]="monthlyForm">
+      <nb-radio-group name="monthly-radio" formControlName="subTab">
+        <nb-radio value="specificDay">
+          <!-- Spesific day -->
+          <ng-container formGroupName="specificDay">
+            <label class="label">on the&nbsp;</label>
+            <ng-container *ngIf="options.cronFlavor === 'quartz'">
+              <nb-select size="tiny" formControlName="day">
+                <nb-option *ngFor="let monthDaysWithLast of selectOptions.monthDaysWithLasts"
+                  [value]="monthDaysWithLast">
+                  {{monthDayDisplay(monthDaysWithLast)}}
+                </nb-option>
+              </nb-select>
+            </ng-container>
+
+            <ng-container *ngIf="options.cronFlavor === 'standard'">
+              <nb-select size="tiny" formControlName="day">
+                <nb-option *ngFor="let monthDaysWithOutLast of selectOptions.monthDaysWithOutLasts"
+                  [value]="monthDaysWithOutLast">
+                  {{monthDayDisplay(monthDaysWithOutLast)}}
+                </nb-option>
+              </nb-select>
+            </ng-container>
+
+            <label class="label">&nbsp;day of every&nbsp;</label>
+            <nb-select size="tiny" formControlName="months">
+              <nb-option *ngFor="let month of selectOptions.months" [value]="month">
+                {{month}}
+              </nb-option>
+            </nb-select>
+            <label class="label">&nbsp;month(s) at&nbsp;</label>
+
+            <cron-time-picker [disabled]="disabled" [formGroup]="monthlyForm.controls.specificDay"
+              [use24HourTime]="options.use24HourTime" [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
+            </cron-time-picker>
+          </ng-container>
+        </nb-radio>
+
+        <nb-radio value="specificWeekDay">
+          <!-- Spesific Week day -->
+          <ng-container formGroupName="specificWeekDay">
+
+            <label class="label">on the&nbsp;</label>
+            <nb-select size="tiny" formControlName="monthWeek">
+              <nb-option *ngFor="let monthWeek of selectOptions.monthWeeks" [value]="monthWeek">
+                {{monthWeekDisplay(monthWeek)}}
+              </nb-option>
+            </nb-select>
+
+            <nb-select size="tiny" formControlName="day">
+              <nb-option *ngFor="let day of selectOptions.days" [value]="day">
+                {{dayDisplay(day)}}
+              </nb-option>
+            </nb-select>
+
+            <label class="label">&nbsp;of every&nbsp;</label>
+            <nb-select size="tiny" formControlName="months">
+              <nb-option *ngFor="let month of selectOptions.months" [value]="month">
+                {{month}}
+              </nb-option>
+            </nb-select>
+            <label class="label">&nbsp;month(s) at&nbsp;</label>
+
+            <cron-time-picker [formGroup]="monthlyForm.controls.specificWeekDay" [use24HourTime]="options.use24HourTime"
+              [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
+            </cron-time-picker>
+          </ng-container>
+        </nb-radio>
+      </nb-radio-group>
+    </ng-container>
+  </nb-tab>
+
+  <nb-tab tabTitle="Yearly">
+    <ng-container [formGroup]="yearlyForm">
+      <nb-radio-group name="yearly-radio" formControlName="subTab">
+        <nb-radio value="specificMonthDay">
+          <label class="label">on the&nbsp;</label>
+          <ng-container formGroupName="specificMonthDay" *ngIf="options.cronFlavor === 'quartz'">
+            <nb-select size="tiny" formControlName="day">
+              <nb-option *ngFor="let monthDaysWithLast of selectOptions.monthDaysWithLasts" [value]="monthDaysWithLast">
+                {{monthDayDisplay(monthDaysWithLast)}}
+              </nb-option>
+            </nb-select>
+          </ng-container>
+
+          <ng-container formGroupName="specificMonthDay" *ngIf="options.cronFlavor === 'standard'">
+            <nb-select size="tiny" formControlName="day">
+              <nb-option *ngFor="let monthDaysWithOutLast of selectOptions.monthDaysWithOutLasts"
+                [value]="monthDaysWithOutLast">
+                {{monthDayDisplay(monthDaysWithOutLast)}}
+              </nb-option>
+            </nb-select>
+          </ng-container>
+
+          <label class="label">&nbsp;Day of&nbsp;</label>
+
+          <ng-container formGroupName="specificMonthDay">
+            <nb-select size="tiny" formControlName="month">
+              <nb-option *ngFor="let month of selectOptions.months" [value]="month">
+                {{monthDisplay(month)}}
+              </nb-option>
+            </nb-select>
+          </ng-container>
+
+          <label class="label">&nbsp;at&nbsp;</label>
+
+          <cron-time-picker [disabled]="disabled" [formGroup]="yearlyForm.controls.specificMonthDay"
+            [use24HourTime]="options.use24HourTime" [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
+          </cron-time-picker>
+        </nb-radio>
+
+        <nb-radio value="specificMonthWeek">
+
+          <label class="label">on the&nbsp;</label>
+
+          <ng-container formGroupName="specificMonthWeek">
+            <nb-select size="tiny" formControlName="monthWeek">
+              <nb-option *ngFor="let monthWeek of selectOptions.monthWeeks" [value]="monthWeek">
+                {{monthWeekDisplay(monthWeek)}}
+              </nb-option>
+            </nb-select>
+          </ng-container>
+
+          <ng-container formGroupName="specificMonthWeek">
+            <nb-select size="tiny" formControlName="day">
+              <nb-option *ngFor="let day of selectOptions.days" [value]="day">
+                {{dayDisplay(day)}}
+              </nb-option>
+            </nb-select>
+          </ng-container>
+
+          <label class="label">&nbsp;of&nbsp;</label>
+
+          <ng-container formGroupName="specificMonthWeek">
+            <nb-select size="tiny" formControlName="month">
+              <nb-option *ngFor="let month of selectOptions.months" [value]="month">
+                {{monthDisplay(month)}}
+              </nb-option>
+            </nb-select>
+          </ng-container>
+
+          <label class="label">&nbsp;at&nbsp;</label>
+
+          <cron-time-picker [disabled]="disabled" [formGroup]="yearlyForm.controls.specificMonthWeek"
+            [use24HourTime]="options.use24HourTime" [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
+          </cron-time-picker>
+        </nb-radio>
+      </nb-radio-group>
+    </ng-container>
+  </nb-tab>
+
+  <!-- Advanced-->
+  <nb-tab tabTitle="Advanced">
+    <ng-container [formGroup]="advancedForm">
+      <label class="label">Expression&nbsp;</label>
+      <input nbInput type="text" fieldSize="tiny" [status]="!cronIsValid(cron) ? 'danger' : 'basic'"
+        formControlName="expression">
+      <p class="caption status-danger" *ngIf="!cronIsValid(cron)">
+        invalid cron expression
+      </p>
+    </ng-container>
+  </nb-tab>
+</nb-tabset>
