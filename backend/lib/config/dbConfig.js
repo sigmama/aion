@@ -8,7 +8,8 @@ const cfg = {
       }
     },
     baseUrlCfg: {
-      halo: "http://localhost:3006/api/aion-jobs"
+      halo: "http://localhost:3006/api/aion-jobs",
+      kraken: "http://localhost:3003/api/aion-jobs"
     }
   },
   prod: {
@@ -21,7 +22,8 @@ const cfg = {
       }
     },
     baseUrlCfg: {
-      halo: "http://ch71w0119:3006/api/aion-jobs"
+      halo: "http://ch71w0119:3006/api/aion-jobs",
+      kraken: "http://spsops.honeywell.com:3003/api/aion-jobs"
     }
   }
 };
