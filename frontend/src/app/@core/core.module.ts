@@ -30,7 +30,7 @@ export const NB_CORE_PROVIDERS = [
         name: 'ldap',
         baseEndpoint: '',
         login: {
-          endpoint: `${environment.siteUrl}:4000/api/usersignin`,
+          endpoint: `${environment.siteUrl}:${environment.port}/api/usersignin`,
           method: 'post',
         },
         logout: {

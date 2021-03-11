@@ -10,7 +10,7 @@ export class UserService {
   private baseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = `${environment.siteUrl}:4000/api`;
+    this.baseUrl = `${environment.siteUrl}:${environment.port}/api`;
   }
 
   addUser(u): Observable<any> {

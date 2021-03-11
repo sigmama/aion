@@ -1,3 +1,7 @@
+const http = require("http");
+const https = require("https");
+const fs = require("fs");
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -42,7 +46,19 @@ const jobRouter = require("./lib/routes/jobRoutes")();
     });
 
     app.use("/api", jobRouter);
-    app.listen(4000);
+    http.createServer(app).listen(4000);
+
+    const sslOptions = {
+      key: fs.readFileSync(
+        new URL("file:///C:/WebServers/ssl/key/spsops_honeywell_com.key")
+      ),
+      cert: fs.readFileSync(
+        new URL(
+          "file:///C:/WebServers/ssl/certification/spsops_honeywell_com.crt"
+        )
+      )
+    };
+    https.createServer(sslOptions, app).listen(4300);
   } catch (e) {
     errLogger.error(`aion.express.start|||${e.message}`);
     process.exit(-1);

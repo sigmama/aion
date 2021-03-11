@@ -12,6 +12,6 @@ export const environment = {
   useHash: true,
   production: false,
   baseUrl: '/',
-  mappedUrl: 'http://127.0.0.1:4200',
   siteUrl: 'http://127.0.0.1',
+  port: 4000,
 };

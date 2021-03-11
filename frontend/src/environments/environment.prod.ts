@@ -7,6 +7,6 @@ export const environment = {
   useHash: false,
   production: true,
   baseUrl: '/aion/',
-  mappedUrl: 'http://spsops.honeywell.com',
   siteUrl: 'http://spsops.honeywell.com',
+  port: 4300,
 };
