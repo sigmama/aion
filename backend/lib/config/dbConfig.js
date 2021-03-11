@@ -23,7 +23,7 @@ const cfg = {
     },
     baseUrlCfg: {
       halo: "http://ch71w0119:3006/api/aion-jobs",
-      kraken: "http://spsops.honeywell.com:3003/api/aion-jobs"
+      kraken: "https://spsops.honeywell.com:3303/api/aion-jobs"
     }
   }
 };
